@@ -1,0 +1,8 @@
+[
+  { "title": "Buy Groceries", "description": "Milk, Bread, Eggs, and Cheese" },
+  {
+    "title": "Work on Project",
+    "description": "Finish the React component task"
+  },
+  { "title": "Call Doctor", "description": "Schedule a routine checkup" }
+]
