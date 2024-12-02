@@ -4,7 +4,7 @@ import {
   Box,
   Button,
   Container,
-  Grid2 as Grid,
+  Grid,
   Paper,
   TextField,
   Typography,
@@ -69,7 +69,7 @@ const Register = () => {
               id="name"
               label="Name"
               name="name"
-              autoComplete="name"
+              autoComplete="off"
               value={formData.name}
               onChange={handleChange}
               autoFocus
@@ -82,7 +82,7 @@ const Register = () => {
               id="email"
               label="Email Address"
               name="email"
-              autoComplete="email"
+              autoComplete="off"
               value={formData.email}
               onChange={handleChange}
             />
@@ -95,7 +95,7 @@ const Register = () => {
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
+              autoComplete="off"
               value={formData.password}
               onChange={handleChange}
             />

@@ -4,21 +4,35 @@ import {
   Box,
   Button,
   Container,
-  Grid2 as Grid,
+  Grid,
   Paper,
   TextField,
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { loginUserAsync } from "../store/slices/userSlice";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("test1@test.com");
+  const [password, setPassword] = useState("test123");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login logic here
+    try {
+      const actionResult = await dispatch(loginUserAsync({ email, password }));
+
+      if (loginUserAsync.fulfilled.match(actionResult)) {
+        navigate("/todo");
+      } else {
+        console.log("Login failed: ", actionResult.payload);
+      }
+    } catch (error) {
+      console.error("Error during login: ", error);
+    }
   };
 
   return (
@@ -58,7 +72,7 @@ const Login = () => {
               id="email"
               label="Email Address"
               name="email"
-              autoComplete="email"
+              autoComplete="off"
               autoFocus
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -72,7 +86,7 @@ const Login = () => {
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
+              autoComplete="off"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -95,7 +109,6 @@ const Login = () => {
               <Grid item>
                 <Link to="/register">
                   <Button
-                    href="#"
                     size="small"
                     sx={{
                       textTransform: "none",

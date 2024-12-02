@@ -1,12 +1,25 @@
 import LogoIcon from "@mui/icons-material/Adb";
 import { AppBar, Box, Button, IconButton, Toolbar } from "@mui/material";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { logoutUserAsync } from "../store/slices/userSlice";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const handleLogout = () => {
-    navigate("/");
+  const handleLogout = async () => {
+    try {
+      const actionResult = await dispatch(logoutUserAsync());
+
+      if (logoutUserAsync.fulfilled.match(actionResult)) {
+        navigate("/");
+      } else {
+        console.log("Logout failed: ", actionResult.payload);
+      }
+    } catch (error) {
+      console.error("Error during logout: ", error);
+    }
   };
 
   return (
