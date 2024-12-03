@@ -11,10 +11,7 @@ export const loginUserAsync = createAsyncThunk(
   "user/login",
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      const res = await axiosApi.post("/auth/login", {
-        email,
-        password,
-      });
+      const res = await axiosApi.post("/auth/login", { email, password });
       return res.data;
     } catch (error) {
       return rejectWithValue(error?.response?.data);
@@ -50,6 +47,7 @@ const userSlice = createSlice({
       .addCase(loginUserAsync.rejected, (state, action) => {
         state.loading = "failed";
         state.error = action.payload?.message;
+        alert(state.error);
       })
       .addCase(logoutUserAsync.pending, (state) => {
         state.loading = "loading";
@@ -61,6 +59,7 @@ const userSlice = createSlice({
       .addCase(logoutUserAsync.rejected, (state, action) => {
         state.loading = "failed";
         state.error = action.payload?.message;
+        alert(state.error);
       }),
 });
 

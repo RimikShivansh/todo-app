@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { TextField, Button, Box, Typography, Grid } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { addTodoAsync } from "../store/slices/todoSlice";
 
-const AddTodoForm = ({ onAddTodo }) => {
+const AddTodoForm = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -13,10 +16,7 @@ const AddTodoForm = ({ onAddTodo }) => {
       return;
     }
 
-    onAddTodo({
-      title,
-      description,
-    });
+    dispatch(addTodoAsync({ title, description }));
 
     // Reset the form
     setTitle("");
@@ -39,14 +39,14 @@ const AddTodoForm = ({ onAddTodo }) => {
         backgroundColor: "#fff",
       }}
     >
-      <Typography variant="h6" sx={{ mb: 2 }}>
+      <Typography variant="h5" sx={{ mb: 2 }}>
         Add New Todo
       </Typography>
       <TextField
         label="Title"
         variant="outlined"
-        required
         fullWidth
+        autoComplete="off"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         sx={{ mb: 2 }}
@@ -54,8 +54,8 @@ const AddTodoForm = ({ onAddTodo }) => {
       <TextField
         label="Description"
         variant="outlined"
-        required
         fullWidth
+        autoComplete="off"
         multiline
         rows={4}
         value={description}
